@@ -10,6 +10,8 @@
 #import "SFImagePickerController.h"
 #import "SFImagePickerDelegate.h"
 
+@import CocoaAsyncSocket;
+
 @interface SFRootViewController ()
 
 @property (nonatomic) SFImagePickerController *camera;
