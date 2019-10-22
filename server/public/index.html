@@ -1,19 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Upload Images to Server</title>
-    <meta charset="utf-8">
-    
+	<title>Upload Images to Server</title>
+	<meta charset="utf-8">
 </head>
 <body>
 
 <h1>Upload Image</h1>
- 
+
 <form action="/upload" method="post" enctype="multipart/form-data">
-        <input type="file" accept="image/*" name="photo" >
-        <input type="submit" value="upload">
+	<input type="file" accept="image/*" name="photo" >
+	<input type="submit" value="upload">
 </form>
-            
+<ul id="messages"></ul>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>
+	$(function () {
+		var socket = io();
+		socket.on('upload', function(payload) {
+			$('#messages').append($('<li><a href=uploads/' + payload.filename + '>' + payload.filename + '</a></li>'));
+			window.scrollTo(0, document.body.scrollHeight);
+		});
+	});
+</script>
 
 </body>
 </html>
