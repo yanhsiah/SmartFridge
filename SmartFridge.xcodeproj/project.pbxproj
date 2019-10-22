@@ -11,6 +11,9 @@
 		9190D3A8235149AC00B098F3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9190D3A7235149AC00B098F3 /* Assets.xcassets */; };
 		9190D3AE235149AC00B098F3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9190D3AD235149AC00B098F3 /* main.m */; };
 		91D71915235E5AC90044FE4B /* SFRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D71914235E5AC90044FE4B /* SFRootViewController.m */; };
+		91D71919235E5DF10044FE4B /* SFImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D71918235E5DF10044FE4B /* SFImagePickerController.m */; };
+		91D71921235E93B10044FE4B /* SFImagePickerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D71920235E93B10044FE4B /* SFImagePickerDelegate.m */; };
+		91D71923235ECB490044FE4B /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 91D71922235ECB490044FE4B /* Settings.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +25,11 @@
 		9190D3AD235149AC00B098F3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		91D71913235E5AC90044FE4B /* SFRootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFRootViewController.h; sourceTree = "<group>"; };
 		91D71914235E5AC90044FE4B /* SFRootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SFRootViewController.m; sourceTree = "<group>"; };
+		91D71917235E5DF10044FE4B /* SFImagePickerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFImagePickerController.h; sourceTree = "<group>"; };
+		91D71918235E5DF10044FE4B /* SFImagePickerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SFImagePickerController.m; sourceTree = "<group>"; };
+		91D7191F235E93B10044FE4B /* SFImagePickerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFImagePickerDelegate.h; sourceTree = "<group>"; };
+		91D71920235E93B10044FE4B /* SFImagePickerDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SFImagePickerDelegate.m; sourceTree = "<group>"; };
+		91D71922235ECB490044FE4B /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +62,7 @@
 		9190D39D235149A700B098F3 /* SmartFridge */ = {
 			isa = PBXGroup;
 			children = (
+				91D71916235E5D920044FE4B /* ImagePicker */,
 				9190D39E235149A700B098F3 /* AppDelegate.h */,
 				9190D39F235149A700B098F3 /* AppDelegate.m */,
 				91D71913235E5AC90044FE4B /* SFRootViewController.h */,
@@ -61,8 +70,20 @@
 				9190D3A7235149AC00B098F3 /* Assets.xcassets */,
 				9190D3AC235149AC00B098F3 /* Info.plist */,
 				9190D3AD235149AC00B098F3 /* main.m */,
+				91D71922235ECB490044FE4B /* Settings.bundle */,
 			);
 			path = SmartFridge;
+			sourceTree = "<group>";
+		};
+		91D71916235E5D920044FE4B /* ImagePicker */ = {
+			isa = PBXGroup;
+			children = (
+				91D71917235E5DF10044FE4B /* SFImagePickerController.h */,
+				91D71918235E5DF10044FE4B /* SFImagePickerController.m */,
+				91D7191F235E93B10044FE4B /* SFImagePickerDelegate.h */,
+				91D71920235E93B10044FE4B /* SFImagePickerDelegate.m */,
+			);
+			path = ImagePicker;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -122,6 +143,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91D71923235ECB490044FE4B /* Settings.bundle in Resources */,
 				9190D3A8235149AC00B098F3 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -135,7 +157,9 @@
 			files = (
 				91D71915235E5AC90044FE4B /* SFRootViewController.m in Sources */,
 				9190D3AE235149AC00B098F3 /* main.m in Sources */,
+				91D71919235E5DF10044FE4B /* SFImagePickerController.m in Sources */,
 				9190D3A0235149A700B098F3 /* AppDelegate.m in Sources */,
+				91D71921235E93B10044FE4B /* SFImagePickerDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

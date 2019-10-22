@@ -7,8 +7,13 @@
 //
 
 #import "SFRootViewController.h"
+#import "SFImagePickerController.h"
+#import "SFImagePickerDelegate.h"
 
 @interface SFRootViewController ()
+
+@property (nonatomic) SFImagePickerController *camera;
+@property (nonatomic) SFImagePickerDelegate *cameraDelegate;
 
 @end
 
@@ -16,18 +21,33 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor redColor];
+    self.view.backgroundColor = [UIColor blackColor];
+
+    if (!self.camera) {
+        self.cameraDelegate = [[SFImagePickerDelegate alloc] init];
+        self.camera = [[SFImagePickerController alloc] init];
+        self.camera.delegate = self.cameraDelegate;
+    }
+
+    UIButton *photoButton = [[UIButton alloc] init];
+    [photoButton addTarget:self action:@selector(snapshot) forControlEvents:UIControlEventTouchUpInside];
+    [photoButton setTitle:@"Snapshot" forState:UIControlStateNormal];
+    photoButton.frame = CGRectMake(0, 0, 160.0, 40.0);
+    [self.view addSubview:photoButton];
+    photoButton.center = self.view.center;
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
 }
-*/
+
+- (void)snapshot {
+    __weak typeof(self) weakSelf = self;
+    [weakSelf presentViewController:weakSelf.camera animated:YES completion:^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [weakSelf.camera takePicture];
+        });
+    }];
+}
 
 @end
