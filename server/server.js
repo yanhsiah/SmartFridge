@@ -22,9 +22,20 @@ app.post('/upload', upload.single('photo'), (req, res) => {
 });
 
 io.on('connection', function(socket) {
+  console.log('on connection');
+  io.emit('welcome');
+
 	socket.on('upload', function(msg) {
     io.emit('upload', msg);
+    console.log('on upload');
   });
+});
+
+io.on('mobile', function(socket) {
+  console.log('mobile');
+});
+io.on('1', function(socket) {
+  console.log('1');
 });
 
 

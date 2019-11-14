@@ -10,7 +10,7 @@
 #import "SFImagePickerController.h"
 #import "SFImagePickerDelegate.h"
 
-@import CocoaAsyncSocket;
+@import SocketIO;
 
 @interface SFRootViewController ()
 
@@ -24,6 +24,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor blackColor];
+    
+    [self setupSocketConnections];
 
     if (!self.camera) {
         self.cameraDelegate = [[SFImagePickerDelegate alloc] init];
@@ -43,6 +45,8 @@
     [super viewDidAppear:animated];
 }
 
+#pragma mark - Priavet methods
+
 - (void)snapshot {
     __weak typeof(self) weakSelf = self;
     [weakSelf presentViewController:weakSelf.camera animated:YES completion:^{
@@ -51,5 +55,37 @@
         });
     }];
 }
+
+- (void)setupSocketConnections {
+    NSURL* url = [[NSURL alloc] initWithString:@"http://192.168.0.24:3000"];
+    SocketManager* manager = [[SocketManager alloc] initWithSocketURL:url config:@{@"log": @YES, @"compress": @YES}];
+    SocketIOClient* socket = manager.defaultSocket;
+
+    [socket on:@"connect" callback:^(NSArray* data, SocketAckEmitter* ack) {
+        NSLog(@"socket connected");
+    }];
+
+    [socket on:@"currentAmount" callback:^(NSArray* data, SocketAckEmitter* ack) {
+        double cur = [[data objectAtIndex:0] floatValue];
+
+        [[socket emitWithAck:@"canUpdate" with:@[@(cur)]] timingOutAfter:0 callback:^(NSArray* data) {
+            [socket emit:@"update" with:@[@{@"amount": @(cur + 2.50)}]];
+        }];
+
+        [ack with:@[@"Got your currentAmount, ", @"dude"]];
+    }];
+    
+    [socket on:@"welcome" callback:^(NSArray* data, SocketAckEmitter* ack) {
+        NSLog(@"welcome from server!~");
+    }];
+    [socket on:@"upload" callback:^(NSArray* data, SocketAckEmitter* ack) {
+        NSLog(@"welcome from server!~");
+    }];
+
+    [socket connect];
+}
+
+#pragma mark - <>
+
 
 @end

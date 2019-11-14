@@ -1,16 +1,20 @@
 PODS:
-  - CocoaAsyncSocket (7.6.3)
+  - Socket.IO-Client-Swift (15.2.0):
+    - Starscream (~> 3.1)
+  - Starscream (3.1.1)
 
 DEPENDENCIES:
-  - CocoaAsyncSocket
+  - Socket.IO-Client-Swift (~> 15.2.0)
 
 SPEC REPOS:
   trunk:
-    - CocoaAsyncSocket
+    - Socket.IO-Client-Swift
+    - Starscream
 
 SPEC CHECKSUMS:
-  CocoaAsyncSocket: eafaa68a7e0ec99ead0a7b35015e0bf25d2c8987
+  Socket.IO-Client-Swift: 1e3e3a1f09f3312a167f0d781eb2f383d477357c
+  Starscream: 4bb2f9942274833f7b4d296a55504dcfc7edb7b0
 
-PODFILE CHECKSUM: 09d0b274739d3f52bed834a1c2f3d4c75c491188
+PODFILE CHECKSUM: d50b0edfd3e96d2cb141c4e6da55e7fa5255ba82
 
 COCOAPODS: 1.8.3

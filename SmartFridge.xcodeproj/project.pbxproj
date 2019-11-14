@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -107,7 +107,6 @@
 				F2F137EEB63F551EA687285E /* Pods-SmartFridge.debug.xcconfig */,
 				09CF8295E824F4FA29F02E1E /* Pods-SmartFridge.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -139,7 +138,7 @@
 		9190D393235149A700B098F3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1010;
+				LastUpgradeCheck = 1110;
 				ORGANIZATIONNAME = "黃彥翔";
 				TargetAttributes = {
 					9190D39A235149A700B098F3 = {
@@ -351,6 +350,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F2F137EEB63F551EA687285E /* Pods-SmartFridge.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4N284APFSC;
@@ -369,6 +369,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 09CF8295E824F4FA29F02E1E /* Pods-SmartFridge.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4N284APFSC;
