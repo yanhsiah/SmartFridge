@@ -10,12 +10,16 @@
 #import "SFImagePickerController.h"
 #import "SFImagePickerDelegate.h"
 
+// https://github.com/socketio/socket.io-client-swift
 @import SocketIO;
 
 @interface SFRootViewController ()
 
 @property (nonatomic) SFImagePickerController *camera;
 @property (nonatomic) SFImagePickerDelegate *cameraDelegate;
+
+@property (nonatomic) SocketManager *manager;
+@property (nonatomic) SocketIOClient *socket;
 
 @end
 
@@ -25,7 +29,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor blackColor];
     
-    // [self setupSocketConnections];
+    [self setupSocketConnections];
 
     if (!self.camera) {
         self.cameraDelegate = [[SFImagePickerDelegate alloc] init];
@@ -57,9 +61,9 @@
 }
 
 - (void)setupSocketConnections {
-    NSURL* url = [[NSURL alloc] initWithString:@"http://192.168.0.24:3000"];
-    SocketManager* manager = [[SocketManager alloc] initWithSocketURL:url config:@{@"log": @YES, @"compress": @YES}];
-    SocketIOClient* socket = manager.defaultSocket;
+    NSURL* url = [[NSURL alloc] initWithString:@"http://192.168.0.24:8900"];
+    self.manager = [[SocketManager alloc] initWithSocketURL:url config:@{@"log": @YES, @"compress": @YES}];
+    SocketIOClient* socket = self.socket = self.manager.defaultSocket;
 
     [socket on:@"connect" callback:^(NSArray* data, SocketAckEmitter* ack) {
         NSLog(@"socket connected");
@@ -83,6 +87,11 @@
     }];
 
     [socket connect];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        NSLog(@"emit");
+        [socket emit:@"update" with:@[@{@"amount": @(2.50)}]];
+    });
 }
 
 #pragma mark - <>

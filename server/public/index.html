@@ -19,6 +19,9 @@
 <script>
 	$(function () {
 		var socket = io();
+    socket.on('welcome', function() {
+      console.log('a welcome from server');
+    });
 		socket.on('upload', function(payload) {
 			$('#messages').append($('<li><a href=uploads/' + payload.filename + '>' + payload.filename + '</a></li>'));
 			window.scrollTo(0, document.body.scrollHeight);
