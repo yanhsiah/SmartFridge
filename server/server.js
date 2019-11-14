@@ -1,4 +1,5 @@
 const express = require('express');
+const bodyParser = require('body-parser')
 const multer = require('multer');
 const upload = multer({dest: __dirname + '/public/uploads'});
 
@@ -9,6 +10,12 @@ const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 
 app.use(express.static('public'));
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+
+// parse application/json
+app.use(bodyParser.json())
 
 app.get('/test', (req, res) => {
   res.json({ key: 'value' });
@@ -21,6 +28,11 @@ app.post('/upload', upload.single('photo'), (req, res) => {
 	io.emit('upload', req.file);
 });
 
+app.post('/sensor', function(req, res) {
+  console.log(req.body);
+  res.send(req.body);
+});
+
 io.on('connection', function(socket) {
   console.log('on connection');
   io.emit('welcome');
@@ -30,14 +42,6 @@ io.on('connection', function(socket) {
     console.log('on upload');
   });
 });
-
-io.on('mobile', function(socket) {
-  console.log('mobile');
-});
-io.on('1', function(socket) {
-  console.log('1');
-});
-
 
 http.listen(PORT, () => {
   console.log('Listening at ' + PORT );

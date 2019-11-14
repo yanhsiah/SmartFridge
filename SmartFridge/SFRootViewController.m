@@ -25,7 +25,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor blackColor];
     
-    [self setupSocketConnections];
+    // [self setupSocketConnections];
 
     if (!self.camera) {
         self.cameraDelegate = [[SFImagePickerDelegate alloc] init];
