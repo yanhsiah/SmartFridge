@@ -18,8 +18,7 @@
 @property (nonatomic) SFImagePickerController *camera;
 @property (nonatomic) SFImagePickerDelegate *cameraDelegate;
 
-@property (nonatomic) SocketManager *manager;
-@property (nonatomic) SocketIOClient *socket;
+@property (nonatomic) SocketManager *socketManager;
 
 @end
 
@@ -29,27 +28,29 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor blackColor];
     
-    [self setupSocketConnections];
+    [self setupCamera];
+    [self setupSocketManager];
 
+    UIButton *snapshotBtn = [[UIButton alloc] init];
+    [snapshotBtn addTarget:self action:@selector(snapshot) forControlEvents:UIControlEventTouchUpInside];
+    [snapshotBtn setTitle:@"Snapshot" forState:UIControlStateNormal];
+    [self.view addSubview:snapshotBtn];
+    snapshotBtn.translatesAutoresizingMaskIntoConstraints = NO;
+    [NSLayoutConstraint activateConstraints:@[
+        [NSLayoutConstraint constraintWithItem:snapshotBtn attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0],
+        [NSLayoutConstraint constraintWithItem:snapshotBtn attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0],
+    ]];
+}
+
+#pragma mark - Priavet methods
+
+- (void)setupCamera {
     if (!self.camera) {
         self.cameraDelegate = [[SFImagePickerDelegate alloc] init];
         self.camera = [[SFImagePickerController alloc] init];
         self.camera.delegate = self.cameraDelegate;
     }
-
-    UIButton *photoButton = [[UIButton alloc] init];
-    [photoButton addTarget:self action:@selector(snapshot) forControlEvents:UIControlEventTouchUpInside];
-    [photoButton setTitle:@"Snapshot" forState:UIControlStateNormal];
-    photoButton.frame = CGRectMake(0, 0, 160.0, 40.0);
-    [self.view addSubview:photoButton];
-    photoButton.center = self.view.center;
 }
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-}
-
-#pragma mark - Priavet methods
 
 - (void)snapshot {
     __weak typeof(self) weakSelf = self;
@@ -60,41 +61,17 @@
     }];
 }
 
-- (void)setupSocketConnections {
-    NSURL* url = [[NSURL alloc] initWithString:@"http://192.168.0.24:8900"];
-    self.manager = [[SocketManager alloc] initWithSocketURL:url config:@{@"log": @YES, @"compress": @YES}];
-    SocketIOClient* socket = self.socket = self.manager.defaultSocket;
-
-    [socket on:@"connect" callback:^(NSArray* data, SocketAckEmitter* ack) {
-        NSLog(@"socket connected");
-    }];
-
-    [socket on:@"currentAmount" callback:^(NSArray* data, SocketAckEmitter* ack) {
-        double cur = [[data objectAtIndex:0] floatValue];
-
-        [[socket emitWithAck:@"canUpdate" with:@[@(cur)]] timingOutAfter:0 callback:^(NSArray* data) {
-            [socket emit:@"update" with:@[@{@"amount": @(cur + 2.50)}]];
+- (void)setupSocketManager {
+    if (!self.socketManager) {
+        NSURL* url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"http://%@", [[NSUserDefaults standardUserDefaults] stringForKey:@"server_ip"]]];
+        self.socketManager = [[SocketManager alloc] initWithSocketURL:url config:@{@"log": @YES, @"compress": @YES}];
+        SocketIOClient *socket = self.socketManager.defaultSocket;
+        __weak typeof (self) weakSelf = self;
+        [socket on:@"snapshot" callback:^(NSArray* data, SocketAckEmitter* ack) {
+            [weakSelf snapshot];
         }];
-
-        [ack with:@[@"Got your currentAmount, ", @"dude"]];
-    }];
-    
-    [socket on:@"welcome" callback:^(NSArray* data, SocketAckEmitter* ack) {
-        NSLog(@"welcome from server!~");
-    }];
-    [socket on:@"upload" callback:^(NSArray* data, SocketAckEmitter* ack) {
-        NSLog(@"welcome from server!~");
-    }];
-
-    [socket connect];
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        NSLog(@"emit");
-        [socket emit:@"update" with:@[@{@"amount": @(2.50)}]];
-    });
+        [socket connect];
+    }
 }
-
-#pragma mark - <>
-
 
 @end
