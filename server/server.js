@@ -26,12 +26,13 @@ app.use(express.static('public'));
 
 app.post('/upload', upload.single('photo'), (req, res) => {
   if (req.file) {
+    res.send(req.file);
     console.log(req.file);
     io.emit('upload', req.file);
 
     var process = spawn('python',['./hello.py', req.file.path]);
     process.stdout.on('data', function(data) {
-      res.send(data.toString());
+      console.log(data.toString());
     });
   }
   else throw 'error';
