@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser')
 const multer = require('multer');
 const upload = multer({dest: __dirname + '/public/uploads'});
+const spawn = require("child_process").spawn;
 
 const app = express();
 const PORT = 3000;
@@ -24,10 +25,16 @@ io.sockets.on('connection', function(socket) {
 app.use(express.static('public'));
 
 app.post('/upload', upload.single('photo'), (req, res) => {
-  if (req.file) res.json(req.file);
+  if (req.file) {
+    console.log(req.file);
+    io.emit('upload', req.file);
+
+    var process = spawn('python',['./hello.py', req.file.path]);
+    process.stdout.on('data', function(data) {
+      res.send(data.toString());
+    });
+  }
   else throw 'error';
-  console.log(req.file);
-  io.emit('upload', req.file);
 });
 
 // parse application/x-www-form-urlencoded
