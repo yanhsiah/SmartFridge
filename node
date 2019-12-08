@@ -1,0 +1,42 @@
+{
+  first_motion_sensor_status: '1',
+  second_motion_sensor_status: '0',
+  third_motion_sensor_status: '0',
+  first_weight_reading: '-0.0',
+  second_weight_reading: '-0.0'
+}
+{
+  first_motion_sensor_status: '1',
+  second_motion_sensor_status: '0',
+  third_motion_sensor_status: '0',
+  first_weight_reading: '-0.0',
+  second_weight_reading: '-0.0'
+}
+{
+  first_motion_sensor_status: '1',
+  second_motion_sensor_status: '0',
+  third_motion_sensor_status: '0',
+  first_weight_reading: '-0.0',
+  second_weight_reading: '-0.0'
+}
+{
+  first_motion_sensor_status: '0',
+  second_motion_sensor_status: '0',
+  third_motion_sensor_status: '0',
+  first_weight_reading: '-0.0',
+  second_weight_reading: '-0.0'
+}
+{
+  first_motion_sensor_status: '0',
+  second_motion_sensor_status: '0',
+  third_motion_sensor_status: '0',
+  first_weight_reading: '-0.0',
+  second_weight_reading: '-0.0'
+}
+
+
+$ node test_commute.js
+Hello, /home/leo/SmartFridge/server/public/uploads/83c499676a8e6b8e17ed50e3152bd079.jpgFound banana at (644.2769, 2223.0457), (1954.6549, 3709.114) with confidence 0.9922961592674255
+Found apple at (1574.228, 1630.5421), (2102.2856, 2204.0198) with confidence 0.9561923742294312
+Found broccoli at (1188.7687, 2038.2224), (1913.0067, 2943.2869) with confidence 0.9956355690956116
+Found carrot at (54.64562, 2616.8655), (400.83997, 4009.3794) with confidence 0.9809467196464539

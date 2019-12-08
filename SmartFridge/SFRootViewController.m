@@ -67,6 +67,10 @@
         self.socketManager = [[SocketManager alloc] initWithSocketURL:url config:@{@"log": @YES, @"compress": @YES}];
         SocketIOClient *socket = self.socketManager.defaultSocket;
         __weak typeof (self) weakSelf = self;
+
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [socket emit:@"camera_id" with:@[[[NSUserDefaults standardUserDefaults] stringForKey:@"camera_id"]]];
+        });
         [socket on:@"snapshot" callback:^(NSArray* data, SocketAckEmitter* ack) {
             [weakSelf snapshot];
         }];

@@ -10,6 +10,16 @@
 			<key>Type</key>
 			<string>PSTextFieldSpecifier</string>
 			<key>Title</key>
+			<string>Camera ID</string>
+			<key>Key</key>
+			<string>camera_id</string>
+			<key>KeyboardType</key>
+			<string>NumbersAndPunctuation</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
 			<string>Server IP</string>
 			<key>Key</key>
 			<string>server_ip</string>
